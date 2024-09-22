@@ -5,7 +5,6 @@ int	isdigit_str(char *str)
 	int i;
 
 	str = trim_spaces(str);
-	printf("%s.\n", str);
 	i = 0;
 	while (str[i])
 	{
