@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "../../includes/get_next_line.h"
 
 size_t	gl_strlen(char *s)
 {

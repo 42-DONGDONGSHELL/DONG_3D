@@ -1,33 +1,57 @@
 NAME = cub3D
 
-SRC_DIR = srcs
-OBJ_FILES	= ${SRCS:.c=.o}
-
 CC = cc
+RM = rm -rf
+LIBFT = libft.a
+MLX = libmlx.a
+LIBFT_DIR = libft
+MLX_DIR = minilibx
+HEADER_DIR = includes
 CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -Iminilibx -Iincludes -Ilibft
 IFLAGS2 = -Iminilibx -Ilibft libft/libft.a -Lminilibx -lmlx
 FFLAGS = -framework OpenGL -framework AppKit
 
+
+GNL = ./srcs/get_next_line/get_next_line.c \
+	./srcs/get_next_line/get_next_line_utils.c \
+
+VALIDATION = ./srcs/validation/simp_validation.c \
+	./srcs/validation/file_validation.c \
+
+READ_FILE = ./srcs/read_file/parse.c \
+	./srcs/read_file/read_file_util.c \
+	./srcs/read_file/read_file.c \
+
 SRCS = ./srcs/main.c \
+	./srcs/simp_util.c \
+	$(GNL) \
+	$(VALIDATION) \
+	$(READ_FILE) \
 
 all: ${NAME}
 
-${NAME}: ${OBJ_FILES} libft libmlx
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(IFLAGS2) $(FFLAGS) -o ${NAME}
+OBJS = ${SRCS:.c=.o}
 
-${SRC_DIR}/%.o: ${SRC_DIR}/%.c
-	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+$(NAME) : $(OBJS)
+		make -C $(LIBFT_DIR)
+		make -C $(MLX_DIR)
+		cp $(LIBFT_DIR)/$(LIBFT) .
+		cp $(MLX_DIR)/$(MLX) .
+		$(CC) $(CFLAGS) -I$(HEADER_DIR) $(OBJS) $(LIBFT) $(IFLAGS2) $(FFLAGS) -o $(NAME)
 
-libft:
-	make -C libft
-libmlx:
-	make -C minilibx
-clean:
-	rm -f $(OBJ_FILES)
-	make -C libft clean
-	make -C minilibx clean
-fclean: clean
-	rm -f $(NAME) ./libft/libft.a
-re: fclean all
-.PHONY: all libft clean fclean re
+clean :
+		make clean -C $(LIBFT_DIR)
+		make clean -C $(MLX_DIR)
+		${RM} ${OBJS}
+
+fclean : clean
+		make fclean -C $(LIBFT_DIR)
+		make clean -C $(MLX_DIR)
+		${RM} $(NAME)
+		${RM} $(LIBFT)
+		${RM} $(MLX)
+
+re : fclean all
+
+.PHONY:		all bonus clean fclean re
