@@ -34,10 +34,9 @@ void	resize_map_info(t_info *info, int new_height, int old_width, int len)
 	while (++i < new_height)
 	{
 		new_map[i] = (int *)safe_malloc(sizeof(int) * longer);
+		fill_int_array(new_map[i], longer, 2);
 		if (i < info->height)
 			ft_memcpy(new_map[i], info->map_info[i], sizeof(int) * info->width);
-		else
-			ft_memset(new_map[i], 0, sizeof(int) * longer);
 	}
 	if (info->map_info)
 		free_2d_array((void **)info->map_info, info->height);

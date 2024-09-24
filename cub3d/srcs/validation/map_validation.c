@@ -1,37 +1,5 @@
 #include "../../includes/cub3d.h"
 
-void check_empty_after_map(int fd)
-{
-    char *buf;
-
-    while (1)
-    {
-        buf = get_next_line(fd);
-        if (buf == NULL)
-            break;
-        strip_newline(buf);
-        if (ft_strlen(buf) != 0)
-            error_exit("Error\nInvalid input");
-        safe_free((void **)&buf);
-    }
-}
-
-int	check_valid_map_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != '0' && line[i] != '1' && line[i] != 'N'
-			&& line[i] != 'S' && line[i] != 'E'
-			&& line[i] != 'W' && line[i] != ' ' && line[i] != '\t')
-			error_exit("Error\nNot a valid map");
-		i++;
-	}
-	return (0);
-}
-
 int	is_valid_map_line(char *line)
 {
 	int	i;
@@ -51,14 +19,69 @@ int	is_valid_map_line(char *line)
 	return (1);
 }
 
-/**
-* map의 모든 면이 벽으로 막혀있는지 확인
-* player 정상적으로 하나 있는지 확인.
-*/
-int	is_valid_map(t_info *info)
+void	check_side_walls(int *line, int len)
 {
-	(void) info;
+	int	start;
+	int	end;
+
+	trim_edges(line, &start, &end, len);
+	if (line[start] != 1 || line[end] != 1)
+		error_exit("Error\nMap must be surrounded by walls");
+}
+
+void	check_first_last_row(int *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != 1 && line[i] != 2)
+			error_exit("Error\nMap must be surrounded by walls");
+		i++;
+	}
+}
+
+void	check_exit_exist(t_info *info, int i, int j)
+{
+	if (info->map_info[i][j] == 0)
+	{
+		if (j + 1 >= info->width || (info->map_info[i][j + 1] != 0 && info->map_info[i][j + 1] != 1))
+			error_exit("Error\nInvalid map");
+
+		if (j - 1 < 0 || (info->map_info[i][j - 1] != 0 && info->map_info[i][j - 1] != 1))
+			error_exit("Error\nInvalid map");
+
+		if (i + 1 >= info->height || (info->map_info[i + 1][j] != 0 && info->map_info[i + 1][j] != 1))
+			error_exit("Error\nInvalid map");
+		
+		if (i - 1 < 0 || (info->map_info[i - 1][j] != 0 && info->map_info[i - 1][j] != 1))
+			error_exit("Error\nInvalid map");
+	}
+}
+
+void	check_valid_map(t_info *info)
+{
+	int	i;
+	int	j;
+
 	if (info->loc.x == -1 || info->loc.y == -1)
 		error_exit("Error\nPlayer start position not found");
-	return (0);
+	i = 0;
+	while (i < info->height)
+	{
+		if (i == 0 || i == (info->height) - 1)
+			check_first_last_row(info->map_info[i]);
+		else
+		{
+			check_side_walls(info->map_info[i], info->width);
+			j = 0;
+			while (j < info->width)
+			{
+				check_exit_exist(info, i, j);
+				j++;
+			}
+		}
+		i++;
+	}
 }

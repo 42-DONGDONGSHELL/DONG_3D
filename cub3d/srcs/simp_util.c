@@ -30,45 +30,20 @@ void	free_2d_array(void **array, int height)
 	free(array);
 }
 
-void	strip_newline(char *str)
+void	fill_int_array(int *arr, int size, int val)
 {
-	size_t	len;
+	int	i;
 
-	len = ft_strlen(str);
-	if (len > 0 && str[len - 1] == '\n')
-		str[len - 1] = '\0';
+	i = 0;
+	while (i < size)
+	{
+		arr[i] = val;
+		i++;
+	}
 }
 
 void	error_exit(char *msg)
 {
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit(1);
-}
-
-char	*trim_spaces(char *str)
-{
-	int	start;
-	int	end;
-
-	start = 0;
-	while (str[start] && (str[start] == ' ' || str[start] == '\t'))
-		start++;
-	end = ft_strlen(str) - 1;
-	while (end > start && (str[end] == ' ' || str[end] == '\t'))
-		end--;
-	str[end + 1] = '\0';
-	return (str + start);
-}
-
-char	*trim_rspaces(char *str)
-{
-	int	start;
-	int	end;
-
-	start = 0;
-	end = ft_strlen(str) - 1;
-	while (end >= start && (str[end] == ' ' || str[end] == '\t'))
-		end--;
-	str[end + 1] = '\0';
-	return (str + start);
 }
