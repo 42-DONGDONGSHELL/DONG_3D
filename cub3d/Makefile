@@ -18,6 +18,7 @@ GNL = ./srcs/get_next_line/get_next_line.c \
 
 VALIDATION = ./srcs/validation/simp_validation.c \
 	./srcs/validation/file_validation.c \
+	./srcs/validation/map_validation.c \
 
 READ_FILE = ./srcs/read_file/parse.c \
 	./srcs/read_file/read_file_util.c \

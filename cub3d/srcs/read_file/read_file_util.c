@@ -14,33 +14,35 @@ int	identifier_to_idx(char *line)
 		return (4);
 	else if (ft_strncmp(line, "F ", 2) == 0)
 		return (5);
+	else if (ft_strncmp(line, "\n", 1) == 0)
+		return (6);
 	else
 		return (-1);
 }
 
-void	resize_map_info(t_info *info, int new_height, int new_width)
+void	resize_map_info(t_info *info, int new_height, int old_width, int len)
 {
 	int	**new_map;
 	int	i;
+	int	longer;
 
+	longer = old_width;
+	if (longer < len)
+		longer = len;
 	new_map = (int **)safe_malloc(sizeof(int *) * new_height);
 	i = -1;
 	while (++i < new_height)
 	{
-		new_map[i] = (int *)safe_malloc(sizeof(int) * new_width);
+		new_map[i] = (int *)safe_malloc(sizeof(int) * longer);
 		if (i < info->height)
 			ft_memcpy(new_map[i], info->map_info[i], sizeof(int) * info->width);
 		else
-			ft_memset(new_map[i], 0, sizeof(int) * new_width);
+			ft_memset(new_map[i], 0, sizeof(int) * longer);
 	}
 	if (info->map_info)
-	{
-		i = -1;
-		while (++i < info->height)
-			free(info->map_info[i]);
-		free(info->map_info);
-	}
+		free_2d_array((void **)info->map_info, info->height);
 	info->map_info = new_map;
+	info->width = longer;
 	info->height = new_height;
 }
 
