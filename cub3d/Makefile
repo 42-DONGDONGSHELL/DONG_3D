@@ -26,6 +26,7 @@ READ_FILE = ./srcs/read_file/parse.c \
 
 SRCS = ./srcs/main.c \
 	./srcs/simp_util.c \
+	./srcs/trim_util.c \
 	$(GNL) \
 	$(VALIDATION) \
 	$(READ_FILE) \

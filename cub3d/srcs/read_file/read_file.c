@@ -56,8 +56,10 @@ void	process_map_line(t_info *info, char *buf, int y)
 	{
 		if (buf[x] == '1')
 			info->map_info[y][x] = 1;
-		else if (buf[x] == '0' || buf[x] == ' ')
+		else if (buf[x] == '0')
 			info->map_info[y][x] = 0;
+		else if (buf[x] == ' ')
+			info->map_info[y][x] = 2;
 		else if (buf[x] == 'N' || buf[x] == 'S' || buf[x] == 'E' || buf[x] == 'W')
 		{
 			info->map_info[y][x] = 0;
@@ -104,4 +106,5 @@ void	read_cub_file(char *file_path, t_info *info)
 	read_map(info, fd);
 	check_empty_after_map(fd);
 	close(fd);
+	check_valid_map(info);
 }

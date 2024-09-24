@@ -4,9 +4,11 @@
 #include "cub3d.h"
 
 // read_file.c
-void		read_identifiers(t_info *info, int fd);
-void		read_map(t_info *info, int fd);
-void		read_cub_file(char *file_path, t_info *info);
+void	read_identifiers(t_info *info, int fd);
+void	skip_empty_lines_until_map(int fd, char **buf);
+void	process_map_line(t_info *info, char *buf, int y);
+void	read_map(t_info *info, int fd);
+void	read_cub_file(char *file_path, t_info *info);
 
 // parse.c;
 void	parse_rgb(char *buf, int *rgb);
