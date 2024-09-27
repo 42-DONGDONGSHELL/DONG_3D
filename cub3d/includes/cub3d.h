@@ -34,8 +34,8 @@ typedef struct s_info
 	t_xy plane;
 	t_xy dir;
 	int **map_info;
-	int height;
-	int width;
+	int map_height;
+	int map_width;
 	t_tex texture;
 }	t_info;
 

@@ -7,7 +7,7 @@
 void	*safe_malloc(size_t size);
 void	error_exit(char *msg);
 void	safe_free(void **ptr);
-void	free_2d_array(void **array, int height);
+void	free_2d_array(void **array, int map_height);
 void	fill_int_array(int *arr, int size, int val);
 
 // trim_util.c

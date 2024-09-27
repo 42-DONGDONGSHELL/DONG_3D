@@ -50,7 +50,7 @@ void	process_map_line(t_info *info, char *buf, int y)
 	int	len;
 
 	len = ft_strlen(buf);
-	resize_map_info(info, y + 1, info->width, len);
+	resize_map_info(info, y + 1, info->map_width, len);
 	x = 0;
 	while (x < len)
 	{
@@ -92,7 +92,7 @@ void	read_map(t_info *info, int fd)
 			break;
 	}
 	safe_free((void **)&buf);
-	info->height = y;
+	info->map_height = y;
 }
 
 void	read_cub_file(char *file_path, t_info *info)
