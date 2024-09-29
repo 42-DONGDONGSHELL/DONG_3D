@@ -45,6 +45,7 @@ int	main(int argc, char **argv)
 	print_identifier_info(&info);
 	print_map(&info);
 	print_xy(&info);
+	render(&info);
 	/**
 	 * 1. argument가 valid한지 확인. -> is_valid_arg();
 	 * 2. 구조체 초기화. -> ft_memset();

@@ -24,12 +24,15 @@ READ_FILE = ./srcs/read_file/parse.c \
 	./srcs/read_file/read_file_util.c \
 	./srcs/read_file/read_file.c \
 
+RENDER = ./srcs/render/render.c \
+
 SRCS = ./srcs/main.c \
 	./srcs/simp_util.c \
 	./srcs/trim_util.c \
 	$(GNL) \
 	$(VALIDATION) \
 	$(READ_FILE) \
+	$(RENDER) \
 
 all: ${NAME}
 

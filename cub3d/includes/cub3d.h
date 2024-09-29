@@ -12,6 +12,9 @@
 #	include <sys/time.h> // gettimeofday
 #	include <math.h> // all functions of the math library
 
+#define WIDTH 640
+#define HEIGHT 480
+
 typedef struct	s_xy
 {
  	double	x; //position x du sprite
@@ -28,6 +31,18 @@ typedef struct s_tex
 	int *c_rgb;	// 천장 색상
 }	t_tex;
 
+typedef struct	s_img
+{
+	void	*img;
+	int		*data;
+
+	int		size_l;
+	int		bpp;
+	int		endian;
+	int		img_width;
+	int		img_height;
+}				t_img;
+
 typedef struct s_info
 {
 	t_xy loc;
@@ -37,7 +52,23 @@ typedef struct s_info
 	int map_height;
 	int map_width;
 	t_tex texture;
+	int		**textures;
+	void	*mlx;
+	void	*win;
+	int		key_a;
+	int		key_w;
+	int		key_s;
+	int		key_d;
+	int		key_right;
+	int		key_left;
+	int		key_esc;
+	t_img	img;
+	int		buf[HEIGHT][WIDTH];
+	double	moveSpeed;
+	double	rotSpeed;
 }	t_info;
+
+int	render(t_info *info);
 
 #	include "get_next_line.h"
 #	include "read_file.h"
