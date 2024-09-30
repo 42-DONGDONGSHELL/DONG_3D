@@ -20,12 +20,12 @@ void	safe_free(void **ptr)
 	}
 }
 
-void	free_2d_array(void **array, int height)
+void	free_2d_array(void **array, int map_height)
 {
 	int	i;
 
 	i = -1;
-	while (++i < height)
+	while (++i < map_height)
 		free(array[i]);
 	free(array);
 }

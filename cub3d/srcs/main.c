@@ -15,10 +15,10 @@ void	print_identifier_info(t_info *info)
 void print_map(t_info *info)
 {
 	printf("====================[MAP INFO]====================\n");
-	printf("height = %d\n", info->height);
-	printf("width = %d\n", info->width);
-	for (int i = 0; i < info->height; i++) {
-		for (int j = 0; j < info->width; j++) {
+	printf("map_height = %d\n", info->map_height);
+	printf("map_width = %d\n", info->map_width);
+	for (int i = 0; i < info->map_height; i++) {
+		for (int j = 0; j < info->map_width; j++) {
 			printf("%d", info->map_info[i][j]);
 		}
 		printf("\n");
@@ -45,6 +45,7 @@ int	main(int argc, char **argv)
 	print_identifier_info(&info);
 	print_map(&info);
 	print_xy(&info);
+	render(&info);
 	/**
 	 * 1. argument가 valid한지 확인. -> is_valid_arg();
 	 * 2. 구조체 초기화. -> ft_memset();
