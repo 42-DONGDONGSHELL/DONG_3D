@@ -8,12 +8,6 @@ void	free_textures_paths(t_info *info)
 	safe_free((void **)&info->texture.e_p);
 }
 
-void	free_rgb_arrays(t_info *info)
-{
-	safe_free((void **)&info->texture.c_rgb);
-	safe_free((void **)&info->texture.f_rgb);
-}
-
 void	free_map_info(t_info *info)
 {
 	if (info->map_info)
@@ -33,7 +27,6 @@ void	free_textures(t_info *info)
 void	free_all_resources(t_info *info)
 {
 	free_textures_paths(info);
-	free_rgb_arrays(info);
 	free_map_info(info);
 	free_textures(info);
 }

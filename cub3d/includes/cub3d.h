@@ -27,8 +27,8 @@ typedef struct s_tex
 	char *s_p;
 	char *w_p;
 	char *e_p;
-	int *f_rgb;	// 바닥 색상
-	int *c_rgb;	// 천장 색상
+	unsigned int	f_hash;
+	unsigned int	c_hash;
 }	t_tex;
 
 typedef struct	s_img
@@ -66,7 +66,6 @@ typedef struct s_info
 	int		buf[HEIGHT][WIDTH];
 	double	moveSpeed;
 	double	rotSpeed;
-	int		need_calc;
 }	t_info;
 
 int	render(t_info *info);

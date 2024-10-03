@@ -7,8 +7,8 @@ void	print_identifier_info(t_info *info)
 	printf("w_p = %s\n", info->texture.w_p);
 	printf("s_p = %s\n", info->texture.s_p);
 	printf("n_p = %s\n", info->texture.n_p);
-	printf("c_rgb = %d, %d, %d\n", info->texture.c_rgb[0], info->texture.c_rgb[1], info->texture.c_rgb[2]);
-	printf("f_rgb = %d, %d, %d\n", info->texture.f_rgb[0], info->texture.f_rgb[1], info->texture.f_rgb[2]);
+	printf("c_rgb = %x\n", info->texture.c_hash);
+	printf("f_rgb = %x\n", info->texture.f_hash);
 	printf("==============[IDENTIFIER INFO DONE]==============\n");
 }
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 	is_valid_arg(argc, argv);
 	ft_memset(&info, 0, sizeof(info));
 	read_cub_file(argv[1], &info);
-	// print_identifier_info(&info);
+	print_identifier_info(&info);
 	// print_map(&info);
 	// print_xy(&info);
 	render(&info);
