@@ -33,13 +33,13 @@ void	init_identifier(int idx, char *buf, t_info *info)
 {
 	strip_newline(buf);
 	if (idx == 0)
-		info->texture.e_p = strdup(buf + 3);
+		info->texture.e_p = ft_strdup(buf + 3);
 	else if (idx == 1)
-		info->texture.w_p = strdup(buf + 3);
+		info->texture.w_p = ft_strdup(buf + 3);
 	else if (idx == 2)
-		info->texture.s_p = strdup(buf + 3);
+		info->texture.s_p = ft_strdup(buf + 3);
 	else if (idx == 3)
-		info->texture.n_p = strdup(buf + 3);
+		info->texture.n_p = ft_strdup(buf + 3);
 	else if (idx == 4)
 		parse_rgb(buf + 2, info->texture.c_rgb);
 	else if (idx == 5)

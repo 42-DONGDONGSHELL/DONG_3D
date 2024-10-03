@@ -358,8 +358,8 @@ int	render(t_info *info)
 	info->key_left = 0;
 	info->key_esc = 0;
 
-	info->plane.x = 0.66;
-	info->plane.y = 0;
+	// info->plane.x = 0.66;
+	// info->plane.y = 0;
 	int tmp = info->loc.x;
 	info->loc.x = info->loc.y;
 	info->loc.y = tmp;
