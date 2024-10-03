@@ -29,6 +29,7 @@ RENDER = ./srcs/render/render.c \
 SRCS = ./srcs/main.c \
 	./srcs/simp_util.c \
 	./srcs/trim_util.c \
+	./srcs/free_util.c \
 	$(GNL) \
 	$(VALIDATION) \
 	$(READ_FILE) \

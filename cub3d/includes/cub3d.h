@@ -66,6 +66,7 @@ typedef struct s_info
 	int		buf[HEIGHT][WIDTH];
 	double	moveSpeed;
 	double	rotSpeed;
+	int		need_calc;
 }	t_info;
 
 int	render(t_info *info);

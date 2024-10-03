@@ -16,6 +16,9 @@ char	*trim_spaces(char *str);
 char	*trim_rspaces(char *str);
 void	trim_edges(int *line, int *start, int *end, int length);
 
+// free_util.c
+void	free_all_resources(t_info *info);
+
 // todo : delete
 void print_map(t_info *info);
 void print_xy(t_info *info);

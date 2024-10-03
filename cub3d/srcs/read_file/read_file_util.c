@@ -51,11 +51,23 @@ void	set_player_position(t_info *info, char dir, int x, int y)
 	info->loc.x = (double)x;
 	info->loc.y = (double)y;
 	if (dir == 'N')
+	{
 		info->dir = (t_xy){0, 1};
+		info->plane = (t_xy){0.66, 0};
+	}
 	else if (dir == 'S')
+	{
 		info->dir = (t_xy){0, -1};
+		info->plane = (t_xy){-0.66, 0};
+	}
 	else if (dir == 'E')
+	{
 		info->dir = (t_xy){1, 0};
+		info->plane = (t_xy){0, -0.66};
+	}
 	else if (dir == 'W')
+	{
 		info->dir = (t_xy){-1, 0};
+		info->plane = (t_xy){0, 0.66};
+	}
 }

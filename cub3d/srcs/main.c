@@ -42,15 +42,10 @@ int	main(int argc, char **argv)
 	is_valid_arg(argc, argv);
 	ft_memset(&info, 0, sizeof(info));
 	read_cub_file(argv[1], &info);
-	print_identifier_info(&info);
-	print_map(&info);
-	print_xy(&info);
+	// print_identifier_info(&info);
+	// print_map(&info);
+	// print_xy(&info);
 	render(&info);
-	/**
-	 * 1. argument가 valid한지 확인. -> is_valid_arg();
-	 * 2. 구조체 초기화. -> ft_memset();
-	 * 3. argument로 들어온 파일 읽어 구조체 완성시키기. -> read_cub_file(); -> get_next_line을 이용하여 체우기
-	 * 4. Map이 valid한지 확인하기. -> is_valid_map();
-	 */
+	free_all_resources(&info);
 	return (0);
 }
