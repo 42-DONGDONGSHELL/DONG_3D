@@ -23,48 +23,21 @@ void	calc(t_info *info)
 {
 	for(int y = 0; y < HEIGHT; y++)
 	{
-		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
-		float rayDirX0 = info->dir.x - info->plane.x;
-		float rayDirY0 = info->dir.y - info->plane.y;
-		float rayDirX1 = info->dir.x + info->plane.x;
-		float rayDirY1 = info->dir.y + info->plane.y;
-
-		// Current y position compared to the center of the screen (the horizon)
-		int p = y - HEIGHT / 2;
-
-		// Vertical position of the camera.
-		float posZ = 0.5 * HEIGHT;
-
-		// Horizontal distance from the camera to the floor for the current row.
-		float rowDistance = posZ / p;
-
-		// calculate the real world step vector we have to add for each x (parallel to camera plane)
-		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / WIDTH;
-		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / WIDTH;
-
-		// real world coordinates of the leftmost column
-		float floorX = info->loc.y + rowDistance * rayDirX0;
-		float floorY = info->loc.y + rowDistance * rayDirY0;
-
 		for(int x = 0; x < WIDTH; ++x)
 		{
 			// 단순 색상으로 덮기 위해 텍스처 좌표 계산 부분 삭제
 
 			// 바닥 색상 (여기서는 예시로 RGB 값을 사용)
-			int floorColor = 0x00FF00; // 초록색
+			int floorColor = info->texture.f_hash;
 
 			// 천장 색상 (예시로 RGB 값 사용)
-			int ceilingColor = 0x0000FF; // 파란색
+			int ceilingColor = info->texture.c_hash;
 
 			// 바닥 그리기
 			info->buf[y][x] = floorColor;
 
 			// 천장 그리기 (화면의 반대편)
 			info->buf[HEIGHT - y - 1][x] = ceilingColor;
-
-			// 바닥 좌표 업데이트
-			floorX += floorStepX;
-			floorY += floorStepY;
 		}
 	}
 
@@ -219,6 +192,15 @@ int	main_loop(t_info *info)
 	return (0);
 }
 
+int destroy(t_info *info)
+{
+	mlx_destroy_image(info->mlx, info->img.img);
+	mlx_destroy_window(info->mlx, info->win);
+	exit(0);
+	return (0);
+}
+
+
 void	key_update(t_info *info)
 {
 	if (info->key_w)
@@ -280,7 +262,7 @@ void	key_update(t_info *info)
 		info->plane.y = oldPlaneX * sin(info->rotSpeed) + info->plane.y * cos(info->rotSpeed);
 	}
 	if (info->key_esc)
-		exit(0);
+		destroy(info);
 }
 
 int		key_press(int key, t_info *info)
@@ -346,7 +328,6 @@ void	load_texture(t_info *info)
 	load_image(info, info->textures[3], info->texture.e_p, &img);
 }
 
-
 int	render(t_info *info)
 {
 	info->mlx = mlx_init();
@@ -358,11 +339,19 @@ int	render(t_info *info)
 	info->key_left = 0;
 	info->key_esc = 0;
 
-	// info->plane.x = 0.66;
-	// info->plane.y = 0;
 	int tmp = info->loc.x;
 	info->loc.x = info->loc.y;
 	info->loc.y = tmp;
+
+	info->buf = (int **)malloc(sizeof(int *) * HEIGHT);
+	if (!info->buf)
+		return (-1);
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		info->buf[i] = (int *)malloc(sizeof(int) * WIDTH);
+		if (!info->buf[i])
+			return (-1);
+	}
 
 	for (int i = 0; i < HEIGHT; i++)
 	{
@@ -397,6 +386,7 @@ int	render(t_info *info)
 	mlx_loop_hook(info->mlx, &main_loop, info);
 	mlx_hook(info->win, X_EVENT_KEY_PRESS, 0, &key_press, info);
 	mlx_hook(info->win, X_EVENT_KEY_RELEASE, 0, &key_release, info);
+	mlx_hook(info->win, 17, 0, destroy, info);
 	mlx_loop(info->mlx);
 
 

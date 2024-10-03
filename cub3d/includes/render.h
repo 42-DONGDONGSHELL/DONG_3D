@@ -5,8 +5,6 @@
 
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
-#define WIDTH 640
-#define HEIGHT 480
 #define X_EVENT_KEY_PRESS	2
 #define X_EVENT_KEY_RELEASE	3
 #define X_EVENT_KEY_EXIT	17
