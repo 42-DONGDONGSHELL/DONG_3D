@@ -12,8 +12,8 @@
 #	include <sys/time.h> // gettimeofday
 #	include <math.h> // all functions of the math library
 
-#define WIDTH 1200
-#define HEIGHT 800
+#define WIDTH 900
+#define HEIGHT 600
 
 typedef struct	s_xy
 {

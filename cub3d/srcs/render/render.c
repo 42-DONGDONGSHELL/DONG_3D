@@ -184,13 +184,6 @@ for(int x = 0; x < WIDTH; x++)
 
 }
 
-int	main_loop(t_info *info)
-{
-	calc(info);
-	draw(info);
-	key_update(info);
-	return (0);
-}
 
 int destroy(t_info *info)
 {
@@ -328,6 +321,22 @@ void	load_texture(t_info *info)
 	load_image(info, info->textures[3], info->texture.e_p, &img);
 }
 
+int	main_loop(t_info *info)
+{
+	if (info->key_w || info->key_a || info->key_s || info->key_d || info->key_left || info->key_right)
+	{
+		calc(info);
+		draw(info);
+		key_update(info);
+	}
+	mlx_hook(info->win, X_EVENT_KEY_PRESS, 0, &key_press, info);
+	mlx_hook(info->win, X_EVENT_KEY_RELEASE, 0, &key_release, info);
+	mlx_hook(info->win, 17, 0, destroy, info);
+
+	return (0);
+}
+
+
 int	render(t_info *info)
 {
 	info->mlx = mlx_init();
@@ -376,17 +385,16 @@ int	render(t_info *info)
 		}
 	}
 	load_texture(info);
-	info->moveSpeed = 0.05;
-	info->rotSpeed = 0.05;
+	info->moveSpeed = 0.02;
+	info->rotSpeed = 0.02;
 
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "mlx");
-
 	info->img.img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
 	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
+	calc(info);
+	draw(info);
+	key_update(info);
 	mlx_loop_hook(info->mlx, &main_loop, info);
-	mlx_hook(info->win, X_EVENT_KEY_PRESS, 0, &key_press, info);
-	mlx_hook(info->win, X_EVENT_KEY_RELEASE, 0, &key_release, info);
-	mlx_hook(info->win, 17, 0, destroy, info);
 	mlx_loop(info->mlx);
 
 
