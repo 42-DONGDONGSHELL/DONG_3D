@@ -11,7 +11,7 @@ void	read_map(t_info *info, int fd);
 void	read_cub_file(char *file_path, t_info *info);
 
 // parse.c;
-void	parse_rgb(char *buf, int *rgb);
+void	parse_rgb(char *buf, unsigned int *hash);
 void	init_identifier(int idx, char *buf, t_info *info);
 
 // read_file_util.c;

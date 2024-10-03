@@ -8,8 +8,6 @@ void	read_identifiers(t_info *info, int fd)
 	char	*buf;
 
 	ft_memset(arr, 0, sizeof(arr));
-	info->texture.f_rgb = safe_malloc(sizeof(int) * 3);
-	info->texture.c_rgb = safe_malloc(sizeof(int) * 3);
 	while (1)
 	{
 		buf = get_next_line(fd);

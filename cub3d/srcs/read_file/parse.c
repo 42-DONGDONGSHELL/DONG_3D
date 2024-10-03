@@ -1,21 +1,19 @@
 #include "../../includes/cub3d.h"
 
-void	parse_rgb(char *buf, int *rgb)
+unsigned int rgb_to_hash(int rgb[3])
 {
-	char	**colors;
-	int		i;
-	int		count;
+    unsigned int	hash;
 
-	colors = ft_split(buf, ',');
-	if (!colors)
-		exit(1); // todo : error msg 여부.
-	count = 0;
-	while (colors[count] != NULL)
-		count++;
-	if (count != 3)
-		error_exit("Error\nInvalid RGB format");
-	i = -1;
-	while (++i < 3)
+	hash = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+    return (hash);
+}
+
+int	*parse_and_validate_rgb(char **colors)
+{
+	int *rgb;
+	
+	rgb = safe_malloc(sizeof(int) * 3);
+	for (int i = 0; i < 3; i++)
 	{
 		if (!isdigit_str(colors[i]))
 			error_exit("Error\nInvalid RGB value");
@@ -23,10 +21,31 @@ void	parse_rgb(char *buf, int *rgb)
 		if (rgb[i] < 0 || rgb[i] > 255)
 			error_exit("Error\nRGB value out of range (0-255)");
 	}
+	return (rgb);
+}
+
+void	parse_rgb(char *buf, unsigned int *hash)
+{
+	char	**colors;
+	int		i;
+	int		count;
+	int		*rgb;
+
+	colors = ft_split(buf, ',');
+	if (!colors)
+		exit(1);
+	count = 0;
+	while (colors[count] != NULL)
+		count++;
+	if (count != 3)
+		error_exit("Error\nInvalid RGB format");
+	rgb = parse_and_validate_rgb(colors);
+	*hash = rgb_to_hash(rgb);
 	i = -1;
 	while (colors[++i])
 		free(colors[i]);
 	free(colors);
+	free(rgb);
 }
 
 void	init_identifier(int idx, char *buf, t_info *info)
@@ -41,7 +60,7 @@ void	init_identifier(int idx, char *buf, t_info *info)
 	else if (idx == 3)
 		info->texture.n_p = ft_strdup(buf + 3);
 	else if (idx == 4)
-		parse_rgb(buf + 2, info->texture.c_rgb);
+		parse_rgb(buf + 2, &(info->texture.c_hash));
 	else if (idx == 5)
-		parse_rgb(buf + 2, info->texture.f_rgb);
+		parse_rgb(buf + 2, &(info->texture.f_hash));
 }
