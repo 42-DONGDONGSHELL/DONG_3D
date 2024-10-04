@@ -12,8 +12,8 @@
 #	include <sys/time.h> // gettimeofday
 #	include <math.h> // all functions of the math library
 
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 900
+#define HEIGHT 600
 
 typedef struct	s_xy
 {
@@ -63,7 +63,7 @@ typedef struct s_info
 	int		key_left;
 	int		key_esc;
 	t_img	img;
-	int		buf[HEIGHT][WIDTH];
+	int		**buf;
 	double	moveSpeed;
 	double	rotSpeed;
 }	t_info;
