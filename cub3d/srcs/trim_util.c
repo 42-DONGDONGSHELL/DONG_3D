@@ -46,4 +46,3 @@ char	*trim_rspaces(char *str)
 	str[end + 1] = '\0';
 	return (str + start);
 }
-

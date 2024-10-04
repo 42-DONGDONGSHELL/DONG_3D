@@ -198,28 +198,28 @@ void	key_update(t_info *info)
 {
 	if (info->key_w)
 	{
-		if (!info->map_info[(int)(info->loc.x + info->dir.x * info->moveSpeed)][(int)(info->loc.y)])
-			info->loc.x += info->dir.x * info->moveSpeed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y + info->dir.y * info->moveSpeed)])
-			info->loc.y += info->dir.y * info->moveSpeed;
+		if (!info->map_info[(int)(info->loc.x + info->dir.x * info->move_speed)][(int)(info->loc.y)])
+			info->loc.x += info->dir.x * info->move_speed;
+		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y + info->dir.y * info->move_speed)])
+			info->loc.y += info->dir.y * info->move_speed;
 	}
 	//move backwards if no wall behind you
 	if (info->key_s)
 	{
-		if (!info->map_info[(int)(info->loc.x - info->dir.x * info->moveSpeed)][(int)(info->loc.y)])
-			info->loc.x -= info->dir.x * info->moveSpeed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y - info->dir.y * info->moveSpeed)])
-			info->loc.y -= info->dir.y * info->moveSpeed;
+		if (!info->map_info[(int)(info->loc.x - info->dir.x * info->move_speed)][(int)(info->loc.y)])
+			info->loc.x -= info->dir.x * info->move_speed;
+		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y - info->dir.y * info->move_speed)])
+			info->loc.y -= info->dir.y * info->move_speed;
 	}
 	if (info->key_d)
 	{
 		// move right by using the perpendicular direction
 		double perpDirX = info->dir.y;
 		double perpDirY = -info->dir.x;
-		if (!info->map_info[(int)(info->loc.x + perpDirX * info->moveSpeed)][(int)(info->loc.y)])
-			info->loc.x += perpDirX * info->moveSpeed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y + perpDirY * info->moveSpeed)])
-			info->loc.y += perpDirY * info->moveSpeed;
+		if (!info->map_info[(int)(info->loc.x + perpDirX * info->move_speed)][(int)(info->loc.y)])
+			info->loc.x += perpDirX * info->move_speed;
+		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y + perpDirY * info->move_speed)])
+			info->loc.y += perpDirY * info->move_speed;
 	}
 	// move left (A key)
 	if (info->key_a)
@@ -227,32 +227,32 @@ void	key_update(t_info *info)
 		// move left by using the perpendicular direction
 		double perpDirX = info->dir.y;
 		double perpDirY = -info->dir.x;
-		if (!info->map_info[(int)(info->loc.x - perpDirX * info->moveSpeed)][(int)(info->loc.y)])
-			info->loc.x -= perpDirX * info->moveSpeed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y - perpDirY * info->moveSpeed)])
-			info->loc.y -= perpDirY * info->moveSpeed;
+		if (!info->map_info[(int)(info->loc.x - perpDirX * info->move_speed)][(int)(info->loc.y)])
+			info->loc.x -= perpDirX * info->move_speed;
+		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y - perpDirY * info->move_speed)])
+			info->loc.y -= perpDirY * info->move_speed;
 	}
 	//rotate to the right
 	if (info->key_right)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dir.x;
-		info->dir.x = info->dir.x * cos(-info->rotSpeed) - info->dir.y * sin(-info->rotSpeed);
-		info->dir.y = oldDirX * sin(-info->rotSpeed) + info->dir.y * cos(-info->rotSpeed);
+		info->dir.x = info->dir.x * cos(-info->rot_speed) - info->dir.y * sin(-info->rot_speed);
+		info->dir.y = oldDirX * sin(-info->rot_speed) + info->dir.y * cos(-info->rot_speed);
 		double oldPlaneX = info->plane.x;
-		info->plane.x = info->plane.x * cos(-info->rotSpeed) - info->plane.y * sin(-info->rotSpeed);
-		info->plane.y = oldPlaneX * sin(-info->rotSpeed) + info->plane.y * cos(-info->rotSpeed);
+		info->plane.x = info->plane.x * cos(-info->rot_speed) - info->plane.y * sin(-info->rot_speed);
+		info->plane.y = oldPlaneX * sin(-info->rot_speed) + info->plane.y * cos(-info->rot_speed);
 	}
 	//rotate to the left
 	if (info->key_left)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = info->dir.x;
-		info->dir.x = info->dir.x * cos(info->rotSpeed) - info->dir.y * sin(info->rotSpeed);
-		info->dir.y = oldDirX * sin(info->rotSpeed) + info->dir.y * cos(info->rotSpeed);
+		info->dir.x = info->dir.x * cos(info->rot_speed) - info->dir.y * sin(info->rot_speed);
+		info->dir.y = oldDirX * sin(info->rot_speed) + info->dir.y * cos(info->rot_speed);
 		double oldPlaneX = info->plane.x;
-		info->plane.x = info->plane.x * cos(info->rotSpeed) - info->plane.y * sin(info->rotSpeed);
-		info->plane.y = oldPlaneX * sin(info->rotSpeed) + info->plane.y * cos(info->rotSpeed);
+		info->plane.x = info->plane.x * cos(info->rot_speed) - info->plane.y * sin(info->rot_speed);
+		info->plane.y = oldPlaneX * sin(info->rot_speed) + info->plane.y * cos(info->rot_speed);
 	}
 	if (info->key_esc)
 		destroy(info);
@@ -385,8 +385,8 @@ int	render(t_info *info)
 		}
 	}
 	load_texture(info);
-	info->moveSpeed = 0.02;
-	info->rotSpeed = 0.02;
+	info->move_speed = 0.02;
+	info->rot_speed = 0.02;
 
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "mlx");
 	info->img.img = mlx_new_image(info->mlx, WIDTH, HEIGHT);

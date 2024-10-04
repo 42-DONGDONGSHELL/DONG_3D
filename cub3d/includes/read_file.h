@@ -1,7 +1,7 @@
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef READ_FILE_H
+# define READ_FILE_H
 
-#include "cub3d.h"
+# include "cub3d.h"
 
 // read_file.c
 void	read_identifiers(t_info *info, int fd);
