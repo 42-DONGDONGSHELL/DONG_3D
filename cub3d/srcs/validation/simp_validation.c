@@ -2,7 +2,7 @@
 
 int	isdigit_str(char *str)
 {
-	int i;
+	int	i;
 
 	str = trim_spaces(str);
 	i = 0;

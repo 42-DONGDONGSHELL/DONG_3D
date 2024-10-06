@@ -1,7 +1,7 @@
 #ifndef VALIDATION_H
 # define VALIDATION_H
 
-#include "cub3d.h"
+# include "cub3d.h"
 
 // simp_validation.c
 int		is_valid_arg(int argc, char **argv);

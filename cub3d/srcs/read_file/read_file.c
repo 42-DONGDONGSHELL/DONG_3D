@@ -58,7 +58,8 @@ void	process_map_line(t_info *info, char *buf, int y)
 			info->map_info[y][x] = 0;
 		else if (buf[x] == ' ')
 			info->map_info[y][x] = 2;
-		else if (buf[x] == 'N' || buf[x] == 'S' || buf[x] == 'E' || buf[x] == 'W')
+		else if (buf[x] == 'N' || buf[x] == 'S'
+			|| buf[x] == 'E' || buf[x] == 'W')
 		{
 			info->map_info[y][x] = 0;
 			set_player_position(info, buf[x], x, y);
@@ -84,10 +85,10 @@ void	read_map(t_info *info, int fd)
 		safe_free((void **)&buf);
 		buf = get_next_line(fd);
 		if (buf == NULL)
-			break;
+			break ;
 		strip_newline(buf);
 		if (ft_strlen(buf) == 0)
-			break;
+			break ;
 	}
 	safe_free((void **)&buf);
 	info->map_height = y;

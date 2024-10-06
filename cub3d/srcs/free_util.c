@@ -16,10 +16,16 @@ void	free_map_info(t_info *info)
 
 void	free_textures(t_info *info)
 {
+	int	i;
+
 	if (info->textures)
 	{
-		for (int i = 0; i < 8; i++)
+		i = 0;
+		while (i < 8)
+		{
 			safe_free((void **)&info->textures[i]);
+			i++;
+		}
 		safe_free((void **)&info->textures);
 	}
 }

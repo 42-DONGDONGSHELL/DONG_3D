@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 	is_valid_arg(argc, argv);
 	ft_memset(&info, 0, sizeof(info));
 	read_cub_file(argv[1], &info);
-	print_identifier_info(&info);
+	// print_identifier_info(&info);
 	// print_map(&info);
 	// print_xy(&info);
 	render(&info);

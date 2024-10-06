@@ -22,25 +22,25 @@ int	identifier_to_idx(char *line)
 
 void	resize_map_info(t_info *info, int new_height, int old_width, int len)
 {
-	int	**new_map;
+	int	**new;
 	int	i;
 	int	longer;
 
 	longer = old_width;
 	if (longer < len)
 		longer = len;
-	new_map = (int **)safe_malloc(sizeof(int *) * new_height);
+	new = (int **)safe_malloc(sizeof(int *) * new_height);
 	i = -1;
 	while (++i < new_height)
 	{
-		new_map[i] = (int *)safe_malloc(sizeof(int) * longer);
-		fill_int_array(new_map[i], longer, 2);
+		new[i] = (int *)safe_malloc(sizeof(int) * longer);
+		fill_int_array(new[i], longer, 2);
 		if (i < info->map_height)
-			ft_memcpy(new_map[i], info->map_info[i], sizeof(int) * info->map_width);
+			ft_memcpy(new[i], info->map_info[i], sizeof(int) * old_width);
 	}
 	if (info->map_info)
 		free_2d_array((void **)info->map_info, info->map_height);
-	info->map_info = new_map;
+	info->map_info = new;
 	info->map_width = longer;
 	info->map_height = new_height;
 }

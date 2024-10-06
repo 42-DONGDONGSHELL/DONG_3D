@@ -29,12 +29,12 @@ void	check_side_walls(int *line, int len)
 		error_exit("Error\nMap must be surrounded by walls");
 }
 
-void	check_first_last_row(int *line)
+void	check_first_last_row(int *line, int len)
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (i < len)
 	{
 		if (line[i] != 1 && line[i] != 2)
 			error_exit("Error\nMap must be surrounded by walls");
@@ -46,16 +46,17 @@ void	check_exit_exist(t_info *info, int i, int j)
 {
 	if (info->map_info[i][j] == 0)
 	{
-		if (j + 1 >= info->map_width || (info->map_info[i][j + 1] != 0 && info->map_info[i][j + 1] != 1))
+		if (j + 1 >= info->map_width
+			|| (info->map_info[i][j + 1] != 0 && info->map_info[i][j + 1] != 1))
 			error_exit("Error\nInvalid map");
-
-		if (j - 1 < 0 || (info->map_info[i][j - 1] != 0 && info->map_info[i][j - 1] != 1))
+		if (j - 1 < 0
+			|| (info->map_info[i][j - 1] != 0 && info->map_info[i][j - 1] != 1))
 			error_exit("Error\nInvalid map");
-
-		if (i + 1 >= info->map_height || (info->map_info[i + 1][j] != 0 && info->map_info[i + 1][j] != 1))
+		if (i + 1 >= info->map_height
+			|| (info->map_info[i + 1][j] != 0 && info->map_info[i + 1][j] != 1))
 			error_exit("Error\nInvalid map");
-
-		if (i - 1 < 0 || (info->map_info[i - 1][j] != 0 && info->map_info[i - 1][j] != 1))
+		if (i - 1 < 0
+			|| (info->map_info[i - 1][j] != 0 && info->map_info[i - 1][j] != 1))
 			error_exit("Error\nInvalid map");
 	}
 }
@@ -71,7 +72,7 @@ void	check_valid_map(t_info *info)
 	while (i < info->map_height)
 	{
 		if (i == 0 || i == (info->map_height) - 1)
-			check_first_last_row(info->map_info[i]);
+			check_first_last_row(info->map_info[i], info->map_width);
 		else
 		{
 			check_side_walls(info->map_info[i], info->map_width);
