@@ -18,15 +18,15 @@ void	free_textures(t_info *info)
 {
 	int	i;
 
-	if (info->textures)
+	if (info->tex)
 	{
 		i = 0;
 		while (i < 8)
 		{
-			safe_free((void **)&info->textures[i]);
+			safe_free((void **)&info->tex[i]);
 			i++;
 		}
-		safe_free((void **)&info->textures);
+		safe_free((void **)&info->tex);
 	}
 }
 

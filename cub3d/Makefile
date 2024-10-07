@@ -25,8 +25,12 @@ READ_FILE = ./srcs/read_file/parse.c \
 	./srcs/read_file/read_file.c \
 
 RENDER = ./srcs/render/render.c \
-		 ./srcs/render/key_hook.c \
 		 ./srcs/render/textures.c \
+		 ./srcs/render/calc.c \
+
+KEY = ./srcs/key/hook.c \
+	./srcs/key/wasd.c \
+	./srcs/key/turn.c \
 
 SRCS = ./srcs/main.c \
 	./srcs/simp_util.c \
@@ -36,6 +40,7 @@ SRCS = ./srcs/main.c \
 	$(VALIDATION) \
 	$(READ_FILE) \
 	$(RENDER) \
+	$(KEY) \
 
 all: ${NAME}
 

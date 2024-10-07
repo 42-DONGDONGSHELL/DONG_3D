@@ -27,8 +27,8 @@ typedef struct s_img
 	int		size_l;
 	int		bpp;
 	int		endian;
-	int		img_width;
-	int		img_height;
+	int		img_w;
+	int		img_h;
 }				t_img;
 
 typedef struct s_info
@@ -40,7 +40,7 @@ typedef struct s_info
 	int		map_height;
 	int		map_width;
 	t_tex	texture;
-	int		**textures;
+	int		**tex;
 	void	*mlx;
 	void	*win;
 	int		key_a;
