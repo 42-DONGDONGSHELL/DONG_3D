@@ -16,4 +16,11 @@
 # define R 124
 # define ESC 53
 
+int		destroy(t_info *info);
+void	key_update(t_info *info);
+int		key_press(int key, t_info *info);
+int		key_release(int key, t_info *info);
+
+int		load_texture(t_info *info);
+
 #endif

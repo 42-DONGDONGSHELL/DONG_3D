@@ -1,12 +1,5 @@
 #include "../../includes/render.h"
 
-/*   서
- * 북  남
- *   동
- */
-
-void	key_update(t_info *info);
-
 void	draw(t_info *info)
 {
 	for (int y = 0; y < HEIGHT; y++)
@@ -185,142 +178,6 @@ for(int x = 0; x < WIDTH; x++)
 }
 
 
-int destroy(t_info *info)
-{
-	mlx_destroy_image(info->mlx, info->img.img);
-	mlx_destroy_window(info->mlx, info->win);
-	exit(0);
-	return (0);
-}
-
-
-void	key_update(t_info *info)
-{
-	if (info->key_w)
-	{
-		if (!info->map_info[(int)(info->loc.x + info->dir.x * info->move_speed)][(int)(info->loc.y)])
-			info->loc.x += info->dir.x * info->move_speed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y + info->dir.y * info->move_speed)])
-			info->loc.y += info->dir.y * info->move_speed;
-	}
-	//move backwards if no wall behind you
-	if (info->key_s)
-	{
-		if (!info->map_info[(int)(info->loc.x - info->dir.x * info->move_speed)][(int)(info->loc.y)])
-			info->loc.x -= info->dir.x * info->move_speed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y - info->dir.y * info->move_speed)])
-			info->loc.y -= info->dir.y * info->move_speed;
-	}
-	if (info->key_d)
-	{
-		// move right by using the perpendicular direction
-		double perpDirX = info->dir.y;
-		double perpDirY = -info->dir.x;
-		if (!info->map_info[(int)(info->loc.x + perpDirX * info->move_speed)][(int)(info->loc.y)])
-			info->loc.x += perpDirX * info->move_speed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y + perpDirY * info->move_speed)])
-			info->loc.y += perpDirY * info->move_speed;
-	}
-	// move left (A key)
-	if (info->key_a)
-	{
-		// move left by using the perpendicular direction
-		double perpDirX = info->dir.y;
-		double perpDirY = -info->dir.x;
-		if (!info->map_info[(int)(info->loc.x - perpDirX * info->move_speed)][(int)(info->loc.y)])
-			info->loc.x -= perpDirX * info->move_speed;
-		if (!info->map_info[(int)(info->loc.x)][(int)(info->loc.y - perpDirY * info->move_speed)])
-			info->loc.y -= perpDirY * info->move_speed;
-	}
-	//rotate to the right
-	if (info->key_right)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dir.x;
-		info->dir.x = info->dir.x * cos(-info->rot_speed) - info->dir.y * sin(-info->rot_speed);
-		info->dir.y = oldDirX * sin(-info->rot_speed) + info->dir.y * cos(-info->rot_speed);
-		double oldPlaneX = info->plane.x;
-		info->plane.x = info->plane.x * cos(-info->rot_speed) - info->plane.y * sin(-info->rot_speed);
-		info->plane.y = oldPlaneX * sin(-info->rot_speed) + info->plane.y * cos(-info->rot_speed);
-	}
-	//rotate to the left
-	if (info->key_left)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dir.x;
-		info->dir.x = info->dir.x * cos(info->rot_speed) - info->dir.y * sin(info->rot_speed);
-		info->dir.y = oldDirX * sin(info->rot_speed) + info->dir.y * cos(info->rot_speed);
-		double oldPlaneX = info->plane.x;
-		info->plane.x = info->plane.x * cos(info->rot_speed) - info->plane.y * sin(info->rot_speed);
-		info->plane.y = oldPlaneX * sin(info->rot_speed) + info->plane.y * cos(info->rot_speed);
-	}
-	if (info->key_esc)
-		destroy(info);
-}
-
-int		key_press(int key, t_info *info)
-{
-	if (key == ESC)
-		exit(0);
-	else if (key == W)
-		info->key_w = 1;
-	else if (key == A)
-		info->key_a = 1;
-	else if (key == S)
-		info->key_s = 1;
-	else if (key == D)
-		info->key_d = 1;
-	else if (key == L)
-		info->key_left = 1;
-	else if (key == R)
-		info->key_right = 1;
-	return (0);
-}
-
-int		key_release(int key, t_info *info)
-{
-	if (key == ESC)
-		exit(0);
-	else if (key == W)
-		info->key_w = 0;
-	else if (key == A)
-		info->key_a = 0;
-	else if (key == S)
-		info->key_s = 0;
-	else if (key == D)
-		info->key_d = 0;
-	else if (key == L)
-		info->key_left = 0;
-	else if (key == R)
-		info->key_right = 0;
-
-	return (0);
-}
-
-void	load_image(t_info *info, int *textures, char *path, t_img *img)
-{
-	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
-	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size_l, &img->endian);
-	for (int y = 0; y < img->img_height; y++)
-	{
-		for (int x = 0; x < img->img_width; x++)
-		{
-			textures[img->img_width * y + x] = img->data[img->img_width * y + x];
-		}
-	}
-	mlx_destroy_image(info->mlx, img->img);
-}
-
-void	load_texture(t_info *info)
-{
-	t_img	img;
-
-	load_image(info, info->textures[0], info->texture.n_p, &img);
-	load_image(info, info->textures[1], info->texture.s_p, &img);
-	load_image(info, info->textures[2], info->texture.w_p, &img);
-	load_image(info, info->textures[3], info->texture.e_p, &img);
-}
-
 int	main_loop(t_info *info)
 {
 	if (info->key_w || info->key_a || info->key_s || info->key_d || info->key_left || info->key_right)
@@ -336,10 +193,8 @@ int	main_loop(t_info *info)
 	return (0);
 }
 
-
-int	render(t_info *info)
+int init_render_info(t_info *info)
 {
-	info->mlx = mlx_init();
 	info->key_a = 0;
 	info->key_w = 0;
 	info->key_s = 0;
@@ -347,6 +202,8 @@ int	render(t_info *info)
 	info->key_right = 0;
 	info->key_left = 0;
 	info->key_esc = 0;
+	info->move_speed = 0.02;
+	info->rot_speed = 0.02;
 
 	int tmp = info->loc.x;
 	info->loc.x = info->loc.y;
@@ -369,24 +226,13 @@ int	render(t_info *info)
 			info->buf[i][j] = 0;
 		}
 	}
+}
 
-	if (!(info->textures = (int **)malloc(sizeof(int *) * 8)))
-		return (-1);
-	for (int i = 0; i < 8; i++)
-	{
-		if (!(info->textures[i] = (int *)malloc(sizeof(int) * (TEX_HEIGHT * TEX_WIDTH))))
-			return (-1);
-	}
-	for (int i = 0; i < 8; i++)
-	{
-		for (int j = 0; j < TEX_HEIGHT * TEX_WIDTH; j++)
-		{
-			info->textures[i][j] = 0;
-		}
-	}
+int	render(t_info *info)
+{
+	info->mlx = mlx_init();
+
 	load_texture(info);
-	info->move_speed = 0.02;
-	info->rot_speed = 0.02;
 
 	info->win = mlx_new_window(info->mlx, WIDTH, HEIGHT, "mlx");
 	info->img.img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
@@ -396,7 +242,6 @@ int	render(t_info *info)
 	key_update(info);
 	mlx_loop_hook(info->mlx, &main_loop, info);
 	mlx_loop(info->mlx);
-
 
 	return (0);
 }
