@@ -24,7 +24,7 @@ int	main_loop(t_info *info)
 	if (info->key_w || info->key_a || info->key_s || \
 		info->key_d || info->key_left || info->key_right)
 	{
-		calc(info);
+		ray_cast(info);
 		draw(info);
 		key_update(info);
 	}
@@ -84,7 +84,7 @@ int	render(t_info *info)
 	info->img.img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
 	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, \
 		&info->img.size_l, &info->img.endian);
-	calc(info);
+	ray_cast(info);
 	draw(info);
 	key_update(info);
 	mlx_loop_hook(info->mlx, &main_loop, info);

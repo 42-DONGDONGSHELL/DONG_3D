@@ -26,7 +26,8 @@ READ_FILE = ./srcs/read_file/parse.c \
 
 RENDER = ./srcs/render/render.c \
 		 ./srcs/render/textures.c \
-		 ./srcs/render/calc.c \
+		 ./srcs/render/ray_cast.c \
+		 ./srcs/render/dda.c \
 
 KEY = ./srcs/key/hook.c \
 	./srcs/key/wasd.c \
