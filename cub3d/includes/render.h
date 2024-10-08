@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/08 20:22:06 by dongclee          #+#    #+#             */
+/*   Updated: 2024/10/08 20:26:07 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RENDER_H
 # define RENDER_H
 
@@ -17,7 +29,8 @@
 # define ESC 53
 # define WALL_MARGIN 0.01
 
-typedef struct s_dda_vars {
+typedef struct s_dda_vars
+{
 	int		map_x;
 	int		map_y;
 	double	side_dist_x;
@@ -30,7 +43,8 @@ typedef struct s_dda_vars {
 	double	ray_dir_y;
 }	t_dda_vars;
 
-typedef struct s_wall_vars {
+typedef struct s_wall_vars
+{
 	int		line_height;
 	int		draw_start;
 	int		draw_end;

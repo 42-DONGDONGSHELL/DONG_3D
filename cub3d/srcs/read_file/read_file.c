@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/08 20:23:23 by dongclee          #+#    #+#             */
+/*   Updated: 2024/10/08 20:23:26 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-// arr idx = 동(0), 서(1), 남(2), 북(3), 천장(4), 바닥(5)
 void	read_identifiers(t_info *info, int fd)
 {
 	int		arr[6];
@@ -30,15 +41,21 @@ void	read_identifiers(t_info *info, int fd)
 
 void	skip_empty_lines_until_map(int fd, char **buf)
 {
+	char	*tmp;
+
 	while (1)
 	{
 		*buf = get_next_line(fd);
 		if (*buf == NULL)
 			error_exit("Error\nMap not found or invalid");
 		strip_newline(*buf);
+		tmp = ft_strdup(*buf);
 		if (is_valid_map_line(*buf))
 			break ;
+		if (ft_strlen(tmp) != 0)
+			error_exit("Error\nInvalid input");
 		safe_free((void **)buf);
+		safe_free((void **)tmp);
 	}
 }
 
