@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:22:55 by dongclee          #+#    #+#             */
-/*   Updated: 2024/10/08 20:22:56 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:47:43 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_textures(t_info *info)
 	if (info->tex)
 	{
 		i = 0;
-		while (i < 8)
+		while (i < 4)
 		{
 			safe_free((void **)&info->tex[i]);
 			i++;
@@ -42,9 +42,26 @@ void	free_textures(t_info *info)
 	}
 }
 
+void	free_buf(t_info *info)
+{
+	int	i;
+
+	if (info->buf)
+	{
+		i = 0;
+		while (i < HEIGHT)
+		{
+			safe_free((void **)&info->buf[i]);
+			i++;
+		}
+		safe_free((void **)&info->buf);
+	}
+}
+
 void	free_all_resources(t_info *info)
 {
 	free_textures_paths(info);
 	free_map_info(info);
 	free_textures(info);
+	free_buf(info);
 }

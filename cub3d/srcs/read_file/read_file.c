@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:23:23 by dongclee          #+#    #+#             */
-/*   Updated: 2024/10/08 20:23:26 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:58:30 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,14 @@ void	skip_empty_lines_until_map(int fd, char **buf)
 		strip_newline(*buf);
 		tmp = ft_strdup(*buf);
 		if (is_valid_map_line(*buf))
+		{
+			free(tmp);
 			break ;
+		}
 		if (ft_strlen(tmp) != 0)
 			error_exit("Error\nInvalid input");
 		safe_free((void **)buf);
-		safe_free((void **)tmp);
+		free(tmp);
 	}
 }
 
